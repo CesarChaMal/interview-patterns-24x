@@ -1,20 +1,20 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-REM Setup Node.js v22 and Java (JDK) v24 on Windows
+REM Setup Node.js v22 and Java (JDK) v21 on Windows
 REM - Uses nvm-windows for Node
-REM - Uses winget (or Chocolatey fallback) for Java Temurin 24
+REM - Uses winget (or Chocolatey fallback) for Java Temurin 21
 REM - Idempotent: reuses installed versions
 REM
 REM Usage:
-REM   setup-env.bat                 ^> install Node 22 + Java 24, install JS deps, build TS
+REM   setup-env.bat                 ^> install Node 22 + Java 21, install JS deps, build TS
 REM   set SKIP_DEPS=1 ^&^& setup-env.bat  ^> skip npm install/build
 
 call :say Starting environment setup
 call :ensure_nvm
 if errorlevel 1 goto :eof
 call :ensure_node22
-call :ensure_java24
+call :ensure_java21
 call :bootstrap_project
 call :say Environment setup complete.
 exit /b 0
@@ -78,12 +78,12 @@ exit /b 0
   call :say Node version: !NODE_VER!
   exit /b 0
 
-:ensure_java24
-  call :say Ensuring Java 24 (Temurin) is installed...
+:ensure_java21
+  call :say Ensuring Java 21 (Temurin) is installed...
 
-  REM Check if current java is already 24
+  REM Check if current java is already 21
   for /f "tokens=*" %%V in ('cmd /c "java -version 2^>^&1 ^| findstr /i \" version\""') do set CUR_JAVA_VER=%%V
-  echo !CUR_JAVA_VER! | findstr /r /c:"\b24\b" >nul 2>nul
+  echo !CUR_JAVA_VER! | findstr /r /c:"\b21\b" >nul 2>nul
   if not errorlevel 1 (
     call :say Java already present: !CUR_JAVA_VER!
     goto :java_home_setup
@@ -91,19 +91,19 @@ exit /b 0
 
   call :has_cmd winget
   if not errorlevel 1 (
-    call :say Installing Eclipse Temurin JDK 24 via winget...
-    winget install -e --id EclipseAdoptium.Temurin.24.JDK -h --accept-package-agreements --accept-source-agreements
+    call :say Installing Eclipse Temurin JDK 21 via winget...
+    winget install -e --id EclipseAdoptium.Temurin.21.JDK -h --accept-package-agreements --accept-source-agreements
     goto :java_home_setup
   )
 
   call :has_cmd choco
   if not errorlevel 1 (
-    call :say Installing Temurin JDK 24 via Chocolatey...
-    choco install -y temurin --version=24.0.0 || choco install -y temurin --pre
+    call :say Installing Temurin JDK 21 via Chocolatey...
+    choco install -y temurin --version=21.0.0 || choco install -y temurin21
     goto :java_home_setup
   )
 
-  call :say Neither winget nor Chocolatey available. Please install JDK 24 manually from https://adoptium.net
+  call :say Neither winget nor Chocolatey available. Please install JDK 21 manually from https://adoptium.net
   goto :java_home_setup
 
 :java_home_setup

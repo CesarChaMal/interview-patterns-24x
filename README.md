@@ -73,6 +73,17 @@ README.md                      # Project overview and usage
 
 ## 🚀 Running the Code
 
+### Environment Setup
+
+```bash
+# Automated setup (installs Node 22 + Java 21)
+./setup-env.sh                 # Unix/Linux/macOS
+setup-env.bat                   # Windows
+
+# Source environment (Git Bash/MINGW64)
+source ./setup-env.sh           # Persist environment in current shell
+```
+
 ### Java (21+)
 
 ```bash

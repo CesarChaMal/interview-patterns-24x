@@ -14,7 +14,7 @@
 
     <properties>
         <!-- Java toolchain -->
-        <maven.compiler.release>24</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
 
         <!-- Test platform -->
@@ -138,7 +138,7 @@
                                 <arg>-encoding</arg>
                                 <arg>UTF-8</arg>
                                 <arg>-release</arg>
-                                <arg>24</arg>
+                                <arg>21</arg>
                             </args>
                         </configuration>
                     </execution>
@@ -155,7 +155,7 @@
                                 <arg>-encoding</arg>
                                 <arg>UTF-8</arg>
                                 <arg>-release</arg>
-                                <arg>24</arg>
+                                <arg>21</arg>
                             </args>
                         </configuration>
                     </execution>

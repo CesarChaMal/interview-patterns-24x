@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Setup Node.js v22 and Java (JDK) v24 for this repo
+# Setup Node.js v22 and Java (JDK) v21 for this repo
 # - Uses nvm for Node
 # - Uses SDKMAN! for Java (Temurin/Zulu etc.) on all platforms where available (including MSYS/Git Bash)
-# - Falls back to winget/Chocolatey for Java (Temurin 24) on MSYS/MINGW/Cygwin only when SDKMAN is unavailable
+# - Falls back to winget/Chocolatey for Java (Temurin 21) on MSYS/MINGW/Cygwin only when SDKMAN is unavailable
 # - Idempotent: reuses installed versions
 #
 # Usage:
-#   bash setup-env.sh               # install Node 22 + Java 24, install JS deps, build TS
+#   bash setup-env.sh               # install Node 22 + Java 21, install JS deps, build TS
 #   SKIP_DEPS=1 bash setup-env.sh   # skip npm install/build
 #   USE_SDKMAN=1 bash setup-env.sh  # force using SDKMAN on MSYS/Windows if installed
-#   JAVA_VENDOR=fx-zulu bash setup-env.sh  # choose vendor (e.g., tem, fx-zulu); implies JAVA_ID=24.<vendor>
-#   JAVA_ID=24.fx-zulu bash setup-env.sh  # choose exact SDKMAN java candidate id
+#   JAVA_VENDOR=fx-zulu bash setup-env.sh  # choose vendor (e.g., tem, fx-zulu); implies JAVA_ID=21.<vendor>
+#   JAVA_ID=21.fx-zulu bash setup-env.sh  # choose exact SDKMAN java candidate id
 
 say() { printf "\n[setup] %s\n" "$*"; }
 err() { printf "\n[setup][ERROR] %s\n" "$*" 1>&2; }
@@ -70,7 +70,7 @@ sdk_wrap() {
   return $rc
 }
 
-# ---------- Java 24 via SDKMAN (preferred) or winget/choco (MSYS fallback) ----------
+# ---------- Java 21 via SDKMAN (preferred) or winget/choco (MSYS fallback) ----------
 install_or_use_java() {
   # Determine if we should use SDKMAN (preferred when available or forced)
   if [ -z "${SDKMAN_DIR:-}" ]; then
@@ -96,16 +96,16 @@ install_or_use_java() {
     # Seed SDKMAN vars to avoid unbound-variable under 'set -u'
     if [ -z "${SDKMAN_OFFLINE_MODE+x}" ]; then export SDKMAN_OFFLINE_MODE=false; fi
 
-    # If already on any Java 24, keep current vendor
-    if sdk_wrap current java | grep -q " 24"; then
-      say "Java 24 already current via SDKMAN; leaving vendor as-is."
+    # If already on any Java 21, keep current vendor
+    if sdk_wrap current java | grep -q " 21"; then
+      say "Java 21 already current via SDKMAN; leaving vendor as-is."
     else
       TARGET_JAVA_ID="${JAVA_ID:-}"
-      if [ -z "$TARGET_JAVA_ID" ] && [ -n "${JAVA_VENDOR:-}" ]; then TARGET_JAVA_ID="24.${JAVA_VENDOR}"; fi
+      if [ -z "$TARGET_JAVA_ID" ] && [ -n "${JAVA_VENDOR:-}" ]; then TARGET_JAVA_ID="21.${JAVA_VENDOR}"; fi
       if [ -z "$TARGET_JAVA_ID" ]; then
-        if sdk_wrap list java | grep -Eiq "24[^\n]*fx-zulu"; then TARGET_JAVA_ID="24.fx-zulu";
-        elif sdk_wrap list java | grep -Eiq "24[^\n]*zulu"; then TARGET_JAVA_ID="24.zulu";
-        else TARGET_JAVA_ID="24-tem"; fi
+        if sdk_wrap list java | grep -Eiq "21[^\n]*fx-zulu"; then TARGET_JAVA_ID="21.fx-zulu";
+        elif sdk_wrap list java | grep -Eiq "21[^\n]*zulu"; then TARGET_JAVA_ID="21.zulu";
+        else TARGET_JAVA_ID="21-tem"; fi
       fi
       say "Ensuring Java ($TARGET_JAVA_ID) is installed via SDKMAN..."
       sdk_wrap install java "$TARGET_JAVA_ID" >/dev/null 2>&1 || true
@@ -127,16 +127,16 @@ install_or_use_java() {
 
   # MSYS/Git Bash fallback to Windows-native installers if SDKMAN not available
   if [ "$IS_MSYS" -eq 1 ]; then
-    say "SDKMAN not detected. Using winget/choco to manage JDK 24 on Windows..."
+    say "SDKMAN not detected. Using winget/choco to manage JDK 21 on Windows..."
 
     if command -v winget >/dev/null 2>&1; then
-      say "Installing Eclipse Temurin JDK 24 via winget (if not present)..."
-      winget install -e --id EclipseAdoptium.Temurin.24.JDK -h --accept-package-agreements --accept-source-agreements >/dev/null 2>&1 || true
+      say "Installing Eclipse Temurin JDK 21 via winget (if not present)..."
+      winget install -e --id EclipseAdoptium.Temurin.21.JDK -h --accept-package-agreements --accept-source-agreements >/dev/null 2>&1 || true
     elif command -v choco >/dev/null 2>&1; then
-      say "Installing Temurin JDK 24 via Chocolatey (if not present)..."
-      choco install -y temurin --version=24.0.0 >/dev/null 2>&1 || choco install -y temurin --pre >/dev/null 2>&1 || true
+      say "Installing Temurin JDK 21 via Chocolatey (if not present)..."
+      choco install -y temurin --version=21.0.0 >/dev/null 2>&1 || choco install -y temurin21 >/dev/null 2>&1 || true
     else
-      say "winget/Chocolatey not found; please install JDK 24 manually from https://adoptium.net"
+      say "winget/Chocolatey not found; please install JDK 21 manually from https://adoptium.net"
     fi
 
     # Derive JAVA_HOME from java.exe using PowerShell if available
@@ -170,15 +170,15 @@ install_or_use_java() {
   if ! command -v sdk >/dev/null 2>&1; then err "SDKMAN installation failed."; exit 1; fi
   if [ -z "${SDKMAN_OFFLINE_MODE+x}" ]; then export SDKMAN_OFFLINE_MODE=false; fi
 
-  if sdk_wrap current java | grep -q " 24"; then
-    say "Java 24 already current via SDKMAN; leaving vendor as-is."
+  if sdk_wrap current java | grep -q " 21"; then
+    say "Java 21 already current via SDKMAN; leaving vendor as-is."
   else
     TARGET_JAVA_ID="${JAVA_ID:-}"
-    if [ -z "$TARGET_JAVA_ID" ] && [ -n "${JAVA_VENDOR:-}" ]; then TARGET_JAVA_ID="24.${JAVA_VENDOR}"; fi
+    if [ -z "$TARGET_JAVA_ID" ] && [ -n "${JAVA_VENDOR:-}" ]; then TARGET_JAVA_ID="21.${JAVA_VENDOR}"; fi
     if [ -z "$TARGET_JAVA_ID" ]; then
-      if sdk_wrap list java | grep -Eiq "24[^\n]*fx-zulu"; then TARGET_JAVA_ID="24.fx-zulu";
-      elif sdk_wrap list java | grep -Eiq "24[^\n]*zulu"; then TARGET_JAVA_ID="24.zulu";
-      else TARGET_JAVA_ID="24-tem"; fi
+      if sdk_wrap list java | grep -Eiq "21[^\n]*fx-zulu"; then TARGET_JAVA_ID="21.fx-zulu";
+      elif sdk_wrap list java | grep -Eiq "21[^\n]*zulu"; then TARGET_JAVA_ID="21.zulu";
+      else TARGET_JAVA_ID="21-tem"; fi
     fi
     say "Ensuring Java ($TARGET_JAVA_ID) is installed via SDKMAN..."
     sdk_wrap install java "$TARGET_JAVA_ID" >/dev/null 2>&1 || true
