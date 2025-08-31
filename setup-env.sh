@@ -221,6 +221,9 @@ bootstrap_project() {
   if command -v pip >/dev/null 2>&1 && [ -f "requirements.txt" ]; then
     say "Installing Python dependencies..."
     pip install -r requirements.txt || true
+    
+    say "Validating Python syntax..."
+    python -m py_compile python/dsa_patterns.py || true
   fi
 
   if command -v npm >/dev/null 2>&1; then

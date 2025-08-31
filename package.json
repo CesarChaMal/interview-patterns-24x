@@ -7,8 +7,10 @@
     "build": "tsc",
     "start": "ts-node typescript/dsaPatterns.ts",
     "test": "jest",
-    "lint:js": "node --check javascript/*.js examples/javascript/*.js",
-    "test:js": "node javascript/dsaPatterns.js"
+    "lint:js": "node scripts/validate-js.js",
+    "test:js": "node javascript/dsaPatterns.js",
+    "build:py": "python -m py_compile python/dsa_patterns.py",
+    "test:py": "python python/dsa_patterns.py"
   },
   "keywords": [
     "algorithms",

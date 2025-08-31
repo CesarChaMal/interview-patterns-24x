@@ -151,6 +151,8 @@ exit /b 0
     call :has_cmd pip && (
       call :say Installing Python dependencies...
       pip install -r requirements.txt
+      call :say Validating Python syntax...
+      python -m py_compile python/dsa_patterns.py
     )
   )
 
