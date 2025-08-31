@@ -19,7 +19,9 @@ def count_main_functions(filepath, language):
         for line in lines:
             # Only count functions that start at column 0 (top-level)
             if re.match(r'^def\s+\w+.*:', line) and not line.startswith('def __'):
-                count += 1
+                # Exclude helper functions
+                if not re.match(r'^def\s+(run_examples|main|test_|helper_)', line):
+                    count += 1
         return count
     
     elif language in ['java', 'typescript', 'javascript', 'scala']:
@@ -32,54 +34,20 @@ def count_main_functions(filepath, language):
 
 def get_pattern_name(filename):
     """Extract pattern name from filename"""
-    # Normalize to standard pattern names
-    name_mappings = {
-        'sliding_window_examples.py': 'sliding_window',
-        'slidingwindowexamples.ts': 'sliding_window',
-        'slidingwindowexamples.js': 'sliding_window', 
-        'slidingwindowexamples.java': 'sliding_window',
-        'scalaslidingwindowexamples.scala': 'sliding_window',
-        
-        'two_pointers_examples.py': 'two_pointers',
-        'twopointersexamples.ts': 'two_pointers',
-        'twopointersexamples.js': 'two_pointers',
-        'twopointersexamples.java': 'two_pointers', 
-        'scalatwopointers examples.scala': 'two_pointers',
-        
-        'backtracking_examples.py': 'backtracking',
-        'backtrackingexamples.ts': 'backtracking',
-        'backtrackingexamples.js': 'backtracking',
-        'backtrackingexamples.java': 'backtracking',
-        'scalabacktrackingexamples.scala': 'backtracking',
-        
-        'heap_examples.py': 'heap',
-        'heapexamples.ts': 'heap', 
-        'heapexamples.js': 'heap',
-        'heapexamples.java': 'heap',
-        'scalaheapexamples.scala': 'heap',
-        
-        'intervals_examples.py': 'intervals',
-        'intervalsexamples.ts': 'intervals',
-        'intervalsexamples.js': 'intervals', 
-        'intervalsexamples.java': 'intervals',
-        'scalaintervalsexamples.scala': 'intervals',
-        
-        'trie_examples.py': 'trie',
-        'trieexamples.ts': 'trie',
-        'trieexamples.js': 'trie',
-        'trieexamples.java': 'trie',
-        'scalatrieexamples.scala': 'trie'
-    }
-    
-    normalized = filename.lower()
-    if normalized in name_mappings:
-        return name_mappings[normalized]
-    
-    # Fallback: extract pattern name
+    # Normalize filename
     name = filename.lower()
+    
+    # Remove scala prefix
     name = re.sub(r'^scala', '', name)
-    name = re.sub(r'examples?\.(py|java|ts|js|scala)$', '', name)
-    name = re.sub(r'_examples$', '', name)
+    
+    # Remove file extensions
+    name = re.sub(r'\.(py|java|ts|js|scala)$', '', name)
+    
+    # Remove examples suffix
+    name = re.sub(r'_?examples?$', '', name)
+    
+    # Convert underscores to consistent format
+    name = name.replace('_', '')
     
     return name
 

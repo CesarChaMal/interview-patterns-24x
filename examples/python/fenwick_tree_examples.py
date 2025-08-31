@@ -259,7 +259,19 @@ def count_inversions(nums):
     
     return count
 
-# 10. Run Examples
+# 10. Kth Smallest in Range
+def kth_smallest_in_range(nums, queries):
+    """Find kth smallest element in range [l, r]"""
+    results = []
+    for l, r, k in queries:
+        subarray = sorted(nums[l:r+1])
+        if k <= len(subarray):
+            results.append(subarray[k-1])
+        else:
+            results.append(-1)
+    return results
+
+# Run Examples
 def run_examples():
     print("=== Fenwick Tree Examples ===")
     

@@ -250,7 +250,46 @@ def concatenated_words(words):
     
     return [word for word in words if can_form(word, 0, 0)]
 
-# 10. Run Examples
+# 10. Word Filter
+def word_filter(words):
+    """Find words that match both prefix and suffix"""
+    trie = Trie()
+    
+    # Insert all words with special encoding
+    for i, word in enumerate(words):
+        for j in range(len(word) + 1):
+            # Insert suffix + '#' + word
+            encoded = word[j:] + '#' + word
+            trie.insert(encoded)
+    
+    def search(prefix, suffix):
+        # Search for suffix + '#' + prefix
+        query = suffix + '#' + prefix
+        node = trie.root
+        for char in query:
+            if char not in node.children:
+                return -1
+            node = node.children[char]
+        
+        # Find the largest index
+        max_index = -1
+        def dfs(node, path):
+            nonlocal max_index
+            if node.is_end:
+                # Extract original word and find its index
+                if '#' in query + path:
+                    word = (query + path).split('#')[1]
+                    if word in words:
+                        max_index = max(max_index, words.index(word))
+            for char, child in node.children.items():
+                dfs(child, path + char)
+        
+        dfs(node, "")
+        return max_index
+    
+    return search
+
+# Run Examples
 def run_examples():
     print("=== Trie Examples ===")
     

@@ -322,7 +322,23 @@ def range_update_query(arr, updates, queries):
     
     return results
 
-# 10. Run Examples
+# 10. Range GCD Query
+def range_gcd_query(arr, queries):
+    """Find GCD of elements in given ranges"""
+    def gcd(a, b):
+        while b:
+            a, b = b, a % b
+        return a
+    
+    results = []
+    for l, r in queries:
+        result = arr[l]
+        for i in range(l + 1, r + 1):
+            result = gcd(result, arr[i])
+        results.append(result)
+    return results
+
+# Run Examples
 def run_examples():
     print("=== Segment Tree Examples ===")
     

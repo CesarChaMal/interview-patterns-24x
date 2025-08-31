@@ -264,7 +264,7 @@ def minimum_flips_to_make_or_equal(a, b, c):
     
     return flips
 
-# 21. Run Examples
+# Run Examples
 def run_examples():
     print("=== Bit Manipulation Examples ===")
     
