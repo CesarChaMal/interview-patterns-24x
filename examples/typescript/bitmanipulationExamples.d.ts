@@ -1,0 +1,22 @@
+declare function singleNumber(nums: number[]): number;
+declare function singleNumberII(nums: number[]): number;
+declare function missingNumber(nums: number[]): number;
+declare function missingNumberXOR(nums: number[]): number;
+declare function getSum(a: number, b: number): number;
+declare function findTheDifference(s: string, t: string): string;
+declare function findMaximumXOR(nums: number[]): number;
+declare function hammingDistance(x: number, y: number): number;
+declare function hammingDistanceBuiltIn(x: number, y: number): number;
+declare function totalHammingDistance(nums: number[]): number;
+declare function hasAlternatingBits(n: number): boolean;
+declare function hasAlternatingBitsXOR(n: number): boolean;
+declare function subarrayBitwiseORs(arr: number[]): number;
+declare function isPowerOfTwo(n: number): boolean;
+declare function hammingWeight(n: number): number;
+declare function reverseBits(n: number): number;
+declare function countBits(n: number): number[];
+declare function singleNumberIII(nums: number[]): number[];
+declare function rangeBitwiseAnd(left: number, right: number): number;
+declare function maxProduct(words: string[]): number;
+declare function grayCode(n: number): number[];
+//# sourceMappingURL=bitmanipulationExamples.d.ts.map

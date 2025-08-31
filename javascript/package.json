@@ -1,0 +1,20 @@
+{
+  "name": "interview-patterns-24x5-javascript",
+  "version": "1.0.0",
+  "description": "24 essential DSA patterns for coding interviews in JavaScript",
+  "main": "dsaPatterns.js",
+  "scripts": {
+    "start": "node dsaPatterns.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "algorithms",
+    "data-structures",
+    "interview",
+    "coding",
+    "patterns",
+    "javascript"
+  ],
+  "author": "Interview Prep Community",
+  "license": "MIT"
+}

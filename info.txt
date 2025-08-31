@@ -1,0 +1,8 @@
+#conda create --name interview-patterns-16x4 python=3.13
+conda create --prefix ./venv python=3.13
+conda init bash
+conda activate ./venv
+pip install -r requirements.txt
+
+
+npx ts-node typescript/dsaPatterns.ts

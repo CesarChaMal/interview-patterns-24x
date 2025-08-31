@@ -1,0 +1,10 @@
+# Core dependencies for DSA patterns
+typing-extensions>=4.0.0
+
+# Testing and development
+pytest>=7.0.0
+pytest-cov>=4.0.0
+mypy>=1.0.0
+
+# Optional: for performance benchmarking
+numpy>=1.20.0

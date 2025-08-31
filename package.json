@@ -1,0 +1,28 @@
+{
+  "name": "interview-patterns-24x5",
+  "version": "1.0.0",
+  "description": "24 essential DSA patterns for coding interviews in 5 languages",
+  "main": "typescript/dsaPatterns.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node typescript/dsaPatterns.ts",
+    "test": "jest"
+  },
+  "keywords": [
+    "algorithms",
+    "data-structures",
+    "interview",
+    "coding",
+    "patterns",
+    "typescript"
+  ],
+  "author": "Interview Prep Community",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
+  }
+}
