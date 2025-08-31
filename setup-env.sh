@@ -214,8 +214,18 @@ bootstrap_project() {
   fi
 
   if command -v mvn >/dev/null 2>&1 && [ -f "pom.xml" ]; then
-    say "Compiling Java/Scala (Maven, skip tests)..."
-    mvn -q -DskipTests compile || true
+    say "Compiling Java/Scala (Maven clean compile)..."
+    mvn clean compile -q || true
+  fi
+
+  if command -v pip >/dev/null 2>&1 && [ -f "requirements.txt" ]; then
+    say "Installing Python dependencies..."
+    pip install -r requirements.txt || true
+  fi
+
+  if command -v npm >/dev/null 2>&1; then
+    say "Validating JavaScript syntax..."
+    npm run lint:js || true
   fi
 }
 
@@ -223,10 +233,10 @@ bootstrap_project() {
 say "Starting environment setup"
 install_or_use_node
 install_or_use_java
-#bootstrap_project
+bootstrap_project
 say "Environment setup complete."
 
 # If the script was executed (not sourced), remind how to persist changes
 if [ "${BASH_SOURCE[0]}" = "$0" ]; then
-  say "Tip: to persist environment in current shell, source it: . ./setup-env.sh"
+  say "Tip: to persist environment in current shell, source it: source ./setup-env.sh or . ./setup-env.sh"
 fi

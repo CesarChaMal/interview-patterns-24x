@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "ts-node typescript/dsaPatterns.ts",
-    "test": "jest"
+    "test": "jest",
+    "lint:js": "node --check javascript/*.js examples/javascript/*.js",
+    "test:js": "node javascript/dsaPatterns.js"
   },
   "keywords": [
     "algorithms",

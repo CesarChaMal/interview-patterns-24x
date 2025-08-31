@@ -142,9 +142,21 @@ exit /b 0
 
   if exist pom.xml (
     call :has_cmd mvn && (
-      call :say Compiling Java/Scala (Maven, skip tests)...
-      mvn -q -DskipTests compile
+      call :say Compiling Java/Scala (Maven clean compile)...
+      mvn clean compile -q
     )
+  )
+
+  if exist requirements.txt (
+    call :has_cmd pip && (
+      call :say Installing Python dependencies...
+      pip install -r requirements.txt
+    )
+  )
+
+  call :has_cmd npm && (
+    call :say Validating JavaScript syntax...
+    npm run lint:js
   )
   exit /b 0
 

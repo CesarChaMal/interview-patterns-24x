@@ -10,31 +10,8 @@
  * - Practice 2-3 patterns per week for optimal retention
  */
 
-// 🎓 DIRECT IMPORTS: Comment out patterns you want to skip
-import '../examples/typescript/slidingwindowExamples';
-import '../examples/typescript/twopointersExamples';
-import '../examples/typescript/monotonicstackExamples';
-import '../examples/typescript/heapExamples';
-import '../examples/typescript/binarysearchExamples';
-import '../examples/typescript/backtrackingExamples';
-import '../examples/typescript/bfsExamples';
-import '../examples/typescript/dynamicprogrammingExamples';
-import '../examples/typescript/fastslowpointersExamples';
-import '../examples/typescript/linkedlistreversalExamples';
-import '../examples/typescript/intervalsExamples';
-import '../examples/typescript/prefixsumExamples';
-import '../examples/typescript/binarysearchanswerExamples';
-import '../examples/typescript/monotonicdequeExamples';
-import '../examples/typescript/topologicalsortExamples';
-import '../examples/typescript/unionfindExamples';
-import '../examples/typescript/treedfsExamples';
-import '../examples/typescript/trieExamples';
-import '../examples/typescript/segmenttreeExamples';
-import '../examples/typescript/fenwicktreeExamples';
-import '../examples/typescript/dfsmemoizationExamples';
-import '../examples/typescript/dijkstraExamples';
-import '../examples/typescript/bitmanipulationExamples';
-import '../examples/typescript/matrixtraversalExamples';
+// 🎓 PATTERN EXAMPLES: Run individual files with npx ts-node examples/typescript/[pattern]Examples.ts
+// Example: npx ts-node examples/typescript/slidingwindowExamples.ts
 
 interface PatternInfo {
     name: string;
@@ -64,7 +41,7 @@ const patterns: PatternInfo[] = [
     { name: "Binary Search on Answer", complexity: "O(n log m)", description: "Search space reduction" },
     { name: "Monotonic Deque", complexity: "O(n)", description: "Sliding window maximum" },
     { name: "Topological Sort", complexity: "O(V+E)", description: "Dependency resolution" },
-    { name: "Union-Find", complexity: "O(α(n))", description: "Connected components" },
+    // { name: "Union-Find", complexity: "O(α(n))", description: "Connected components" },
     
     // ===== ADVANCED PATTERNS (17-24) - SPECIALIZATION LEVEL =====
     // Learn these after mastering core patterns - they cover remaining 15%
@@ -102,10 +79,10 @@ function printStudyGuide(): void {
     console.log("   - Practice 2-3 patterns per week for retention");
     console.log("   - Solve 5-10 problems per pattern");
     console.log("   - Review failed attempts to identify gaps");
-    console.log("\n🔧 CUSTOMIZATION:");
-    console.log("   - Comment out imports at the top to focus on specific patterns");
-    console.log("   - Add // before any import line to skip it during execution");
-    console.log("   - Uncomment imports when ready to practice them");
+    console.log("\n🔧 USAGE:");
+    console.log("   - Run individual patterns: npx ts-node examples/typescript/[pattern]Examples.ts");
+    console.log("   - Example: npx ts-node examples/typescript/slidingwindowExamples.ts");
+    console.log("   - This main file provides study guide and pattern overview");
     console.log("\n🏆 INTERVIEW READINESS CHECKLIST:");
     console.log("   ✅ Pattern Recognition: Can identify pattern in 30 seconds");
     console.log("   ✅ Implementation Speed: Code solution in 10-15 minutes");
@@ -126,7 +103,7 @@ function printStudyGuide(): void {
 
 function main(): void {
     console.log("Welcome to the Complete DSA Patterns Mastery Program!");
-    console.log("All patterns executed via direct imports with real algorithm output!");
+    console.log("Study guide with 24 patterns - run examples individually!");
     
     printStudyGuide();
     
@@ -149,7 +126,7 @@ function main(): void {
         console.log(`\n${(i + 1).toString().padStart(2, ' ')}. ${pattern.name}`);
         console.log(`    Time Complexity: ${pattern.complexity}`);
         console.log(`    Use Case: ${pattern.description}`);
-        console.log(`    ✅ 10 examples executed via direct import`);
+        console.log(`    ✅ Run: npx ts-node examples/typescript/${pattern.name.toLowerCase().replace(/[^a-z0-9]/g, '')}Examples.ts`);
     }
     
     // Advanced Patterns (17-24)
@@ -164,7 +141,7 @@ function main(): void {
             console.log(`\n${(i + 1).toString().padStart(2, ' ')}. ${pattern.name}`);
             console.log(`    Time Complexity: ${pattern.complexity}`);
             console.log(`    Use Case: ${pattern.description}`);
-            console.log(`    ✅ 10 examples executed via direct import`);
+            console.log(`    ✅ Run: npx ts-node examples/typescript/${pattern.name.toLowerCase().replace(/[^a-z0-9]/g, '')}Examples.ts`);
         }
     }
     
